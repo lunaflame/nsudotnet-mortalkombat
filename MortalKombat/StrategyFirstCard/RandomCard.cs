@@ -1,11 +1,11 @@
-﻿using Contracts;
-using Contracts.Cards;
+﻿using Contracts.Cards;
+using Contracts.Interfaces;
 
-namespace ColliseumStrategies
+namespace Nsu.MortalKombat.Strategies
 {
     public class RandomCard : ICardPickStrategy
 	{
-		private static Random rnd = new Random();
+		private static readonly Random rnd = new Random();
 
 		public int Pick(Card[] cards)
 		{

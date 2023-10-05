@@ -1,4 +1,6 @@
-using Nsu.MortalKombat.Contracts.Cards;
+using Contracts.Cards;
+
+namespace Contracts.Interfaces;
 
 /// <summary>
 /// Стратегия выбора карты

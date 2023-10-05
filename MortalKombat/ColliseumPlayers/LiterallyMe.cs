@@ -1,8 +1,8 @@
-﻿using ColliseumStrategies;
-using Contracts;
-using Contracts.Cards;
+﻿using Contracts.Cards;
+using Contracts.Interfaces;
+using Nsu.MortalKombat.Strategies;
 
-namespace Nsu.MortalKombat.ColliseumPlayers
+namespace Nsu.MortalKombat.Players
 {
     public class LiterallyMe : IPlayer
 	{

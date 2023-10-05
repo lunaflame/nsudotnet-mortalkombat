@@ -1,12 +1,12 @@
-﻿using ColliseumStrategies;
-using Contracts;
-using Contracts.Cards;
+﻿using Contracts.Cards;
+using Contracts.Interfaces;
+using Nsu.MortalKombat.Strategies;
 
-namespace Nsu.MortalKombat.ColliseumPlayers
+namespace Nsu.MortalKombat.Players
 {
     public class Elon : IPlayer
 	{
-		FirstCard strategy = new FirstCard();
+		private readonly FirstCard strategy = new FirstCard();
 
 		public ICardPickStrategy GetStrategy(Card[] ownCards)
 		{

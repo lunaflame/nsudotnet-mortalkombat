@@ -1,21 +1,25 @@
-﻿using Contracts.Cards;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Contracts.Cards;
+using Contracts.Interfaces;
 
-namespace Contracts
+/* TODO: This assembly only adds one DeckShuffler implementation
+         Should it be in `Nsu.MortalKombat.DeckShufflers` or should it just put a class into the namespace?
+*/ 
+
+namespace Nsu.MortalKombat.DeckShufflers
 {
-
     public class DeckShuffler : IDeckShuffler
     {
-        private Random rnd = new Random();
+        private readonly Random rnd = new Random();
 
         // I really expected this to be part of std, honestly
-        private void FisherYatesShuffle<T>(T[] arr)
+        private void FisherYatesShuffle<T>(IList<T> arr)
         {
-            int n = arr.Length - 1;
+            int n = arr.Count - 1;
 
             for (int i = 0; i < n; i++)
             {
-                int idx = rnd.Next(i, arr.Length);
+                int idx = rnd.Next(i, arr.Count);
                 (arr[i], arr[idx]) = (arr[idx], arr[i]);
             }
         }
@@ -29,8 +33,8 @@ namespace Contracts
             for (int i = 0; i < IDeckShuffler.DeckLength; i++)
             {
                 // First half of the deck will be filled with black cards, the second - with red ones
-                CardColor pickedColor = i < IDeckShuffler.DeckLength / 2 ? CardColor.Black
-                                                                         : CardColor.Red;
+                var pickedColor = i < IDeckShuffler.DeckLength / 2 ? CardColor.Black
+                                                                   : CardColor.Red;
                 ret[i] = new Card(pickedColor);
             }
 
@@ -38,6 +42,5 @@ namespace Contracts
 
             return ret;
         }
-
     }
 }

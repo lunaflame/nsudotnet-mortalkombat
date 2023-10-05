@@ -1,6 +1,7 @@
 ﻿using Contracts.Cards;
+using Contracts.Interfaces;
 
-namespace ColliseumStrategies
+namespace Nsu.MortalKombat.Strategies
 {
     public class FirstCard : ICardPickStrategy
 	{

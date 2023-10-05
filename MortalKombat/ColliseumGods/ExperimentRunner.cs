@@ -1,7 +1,8 @@
-﻿using Nsu.MortalKombat.Contracts;
-using Nsu.MortalKombat.Contracts.Cards;
+﻿using Contracts.Cards;
+using Contracts.Interfaces;
+using Nsu.MortalKombat.DeckShufflers;
 
-namespace Gods
+namespace Nsu.MortalKombat.Gods
 {
     public record ExperimentResult
 	{
@@ -13,13 +14,17 @@ namespace Gods
 
 	public class ExperimentRunner
 	{
-		DeckShuffler deckShuffler = new DeckShuffler();
+		IDeckShuffler deckShuffler = new DeckShuffler();
+
+		public ExperimentRunner(IDeckShuffler shuffler)
+		{
+			this.deckShuffler = shuffler;
+		}
 
 		public ExperimentResult RunSingle(IPlayer p1, IPlayer p2)
 		{
 			Card[] deck = deckShuffler.GetShuffledDeck();
 
-			// TODO: Stub; need to actually split deck into two
 			Card[] deckHalf1 = new Card[18];
 			Array.Copy(deck, 0, deckHalf1, 0, 18);
 
@@ -35,10 +40,12 @@ namespace Gods
 
 			bool allow = deckHalf1[pick2].Color == deckHalf2[pick1].Color;
 
-			ExperimentResult res = new ExperimentResult();
-			res.AllowFight = allow; // TODO: Actually check colors
-			res.Pick1 = pick1;
-			res.Pick2 = pick2;
+			ExperimentResult res = new ExperimentResult
+			{
+				AllowFight = allow, // TODO: Actually check colors
+				Pick1 = pick1,
+				Pick2 = pick2
+			};
 
 			return res;
 		}

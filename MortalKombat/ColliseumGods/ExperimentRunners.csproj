@@ -4,11 +4,11 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>Nsu.MortalKombat.Gods</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ColliseumPlayers\ColliseumPlayers.csproj" />
-    <ProjectReference Include="..\MortalKombat\MortalKombat.csproj" />
+    <ProjectReference Include="..\DeckShuffler\DeckShuffler.csproj" />
   </ItemGroup>
 
 </Project>

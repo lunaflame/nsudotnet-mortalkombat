@@ -1,4 +1,4 @@
-namespace Nsu.MortalKombat.Contracts.Cards;
+namespace Contracts.Cards;
 
 /// <summary>
 /// Цвет карты

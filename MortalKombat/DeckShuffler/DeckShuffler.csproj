@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Nsu.MortalKombat.Players</RootNamespace>
+    <RootNamespace>Nsu.MortalKombat.DeckShufflers</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StrategyFirstCard\Strategies.csproj" />
+    <ProjectReference Include="..\MortalKombat\Contracts.csproj" />
   </ItemGroup>
 
 </Project>

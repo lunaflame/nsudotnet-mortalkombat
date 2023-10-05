@@ -1,6 +1,6 @@
-﻿using Nsu.MortalKombat.Contracts.Cards;
+﻿using Contracts.Cards;
 
-namespace Nsu.MortalKombat.Contracts.Interfaces
+namespace Contracts.Interfaces
 {
     public interface IPlayer
     {
