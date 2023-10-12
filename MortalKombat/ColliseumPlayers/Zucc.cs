@@ -2,15 +2,14 @@
 using Contracts.Interfaces;
 using Nsu.MortalKombat.Strategies;
 
-namespace Nsu.MortalKombat.Players
-{
-	public class Zucc : IPlayer
-	{
-		private readonly FirstCard strategy = new FirstCard();
+namespace Nsu.MortalKombat.Players;
 
-		public ICardPickStrategy GetStrategy(Card[] ownCards)
-		{
-			return strategy;
-		}
+public class Zucc : IPlayer
+{
+	private readonly FirstCard strategy = new();
+
+	public ICardPickStrategy GetStrategy(Card[] ownCards)
+	{
+		return strategy;
 	}
 }

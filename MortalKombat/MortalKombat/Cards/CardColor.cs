@@ -1,17 +1,17 @@
 namespace Contracts.Cards;
 
 /// <summary>
-/// Цвет карты
+///     Цвет карты
 /// </summary>
 public enum CardColor
 {
 	/// <summary>
-	/// Красная
+	///     Красная
 	/// </summary>
 	Red,
 
 	/// <summary>
-	/// Чёрная
+	///     Чёрная
 	/// </summary>
-	Black,
+	Black
 }

@@ -1,7 +1,7 @@
 ﻿namespace Contracts.Cards;
 
 /// <summary>
-/// Игральная карта
+///     Игральная карта
 /// </summary>
 public record Card(CardColor Color)
 {

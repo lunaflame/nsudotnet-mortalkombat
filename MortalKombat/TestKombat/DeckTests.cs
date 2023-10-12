@@ -6,23 +6,23 @@ namespace TestKombat;
 
 public class DeckTests
 {
-    private IDeckShuffler shuffler;
-    
-    [SetUp]
-    public void Setup()
-    {
-        shuffler = new DeckShuffler();
-    }
+	private IDeckShuffler shuffler;
 
-    [Test]
-    public void TestShuffledCards()
-    {
-        Card[] deck = shuffler.GetShuffledDeck();
+	[SetUp]
+	public void Setup()
+	{
+		shuffler = new DeckShuffler();
+	}
 
-        int blackCards = deck.Count(card => card.Color == CardColor.Black),
-            redCards   = deck.Count(card => card.Color == CardColor.Red);
+	[Test]
+	public void TestShuffledCards()
+	{
+		Card[] deck = shuffler.GetShuffledDeck();
 
-        Assert.That(blackCards, Is.EqualTo(18));
-        Assert.That(redCards, Is.EqualTo(18));
-    }
+		int blackCards = deck.Count(card => card.Color == CardColor.Black),
+			redCards = deck.Count(card => card.Color == CardColor.Red);
+
+		Assert.That(blackCards, Is.EqualTo(18));
+		Assert.That(redCards, Is.EqualTo(18));
+	}
 }

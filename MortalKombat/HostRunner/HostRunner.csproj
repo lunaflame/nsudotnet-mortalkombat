@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ColliseumGods\ExperimentRunners.csproj" />
-      <ProjectReference Include="..\ColliseumPlayers\Players.csproj" />
-      <ProjectReference Include="..\DeckShuffler\DeckShuffler.csproj" />
-      <ProjectReference Include="..\StrategyFirstCard\Strategies.csproj" />
+        <ProjectReference Include="..\ColliseumGods\ExperimentRunners.csproj"/>
+        <ProjectReference Include="..\ColliseumPlayers\Players.csproj"/>
+        <ProjectReference Include="..\DeckShuffler\DeckShuffler.csproj"/>
+        <ProjectReference Include="..\StrategyFirstCard\Strategies.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12"/>
     </ItemGroup>
 
 </Project>

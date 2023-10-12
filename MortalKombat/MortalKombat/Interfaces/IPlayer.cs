@@ -1,9 +1,8 @@
 ﻿using Contracts.Cards;
 
-namespace Contracts.Interfaces
+namespace Contracts.Interfaces;
+
+public interface IPlayer
 {
-    public interface IPlayer
-    {
-        public ICardPickStrategy GetStrategy(Card[] ownCards);
-    }
+	public ICardPickStrategy GetStrategy(Card[] ownCards);
 }

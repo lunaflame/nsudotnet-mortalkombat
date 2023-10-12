@@ -1,4 +1,5 @@
-﻿using Contracts.Interfaces;
+﻿using Contracts.Cards;
+using Contracts.Interfaces;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Nsu.MortalKombat.DatabaseOracle;
@@ -11,83 +12,83 @@ namespace TestKombat;
 
 public class StoredExperimentTests
 {
-    private DBOracle db;
-    private DeckShuffler shuffler = new DeckShuffler();
-    private SqliteConnection sqlconn;
-    
-    [OneTimeSetUp]
-    public void Init()
-    {
-        sqlconn = new SqliteConnection("Filename=:memory:");
-        sqlconn.Open();
+	private const int ExperimentCount = 100;
+	private DBOracle db;
+	private readonly DeckShuffler shuffler = new();
+	private SqliteConnection sqlconn;
 
-        var opts = new DbContextOptionsBuilder<DBOracle>()
-            .UseSqlite(sqlconn)
-            .Options;
+	[OneTimeSetUp]
+	public void Init()
+	{
+		sqlconn = new SqliteConnection("Filename=:memory:");
+		sqlconn.Open();
 
-        db = new DBOracle(opts);
-        db.Database.EnsureCreated();
-    }
-    
-    private const int ExperimentCount = 100;
-    
-    [Test, Order(1)]
-    public void TestExperimentStore()
-    {
-        {
-            IPlayer p1 = new Zucc(), p2 = new Elon(); // TODO: Should player names/order be stored?
+		DbContextOptions<DBOracle> opts = new DbContextOptionsBuilder<DBOracle>()
+			.UseSqlite(sqlconn)
+			.Options;
 
-            for (int i = 0; i < ExperimentCount; i++)
-            {
-                var deck = shuffler.GetShuffledDeck();
-                var (half1, half2) = DeckShuffler.SplitDeckInHalves(deck);
-                var expOut = ExperimentRunner.UseStrategies(
-                    (p1.GetStrategy(half1), half1),
-                    (p2.GetStrategy(half2), half2));
+		db = new DBOracle(opts);
+		db.Database.EnsureCreated();
+	}
 
-                var res = new ExperimentEntry()
-                {
-                    Deck = deck,
-                    Pick1 = expOut.Pick1,
-                    Pick2 = expOut.Pick2,
-                    AllowFight = expOut.AllowFight
-                };
+	[Test]
+	[Order(1)]
+	public void TestExperimentStore()
+	{
+		{
+			IPlayer p1 = new Zucc(), p2 = new Elon(); // TODO: Should player names/order be stored?
 
-                db.StoreExperiment(res);
-            }
+			for (int i = 0; i < ExperimentCount; i++)
+			{
+				Card[] deck = shuffler.GetShuffledDeck();
+				(Card[] half1, Card[] half2) = DeckShuffler.SplitDeckInHalves(deck);
+				ExperimentResult expOut = ExperimentRunner.UseStrategies(
+					(p1.GetStrategy(half1), half1),
+					(p2.GetStrategy(half2), half2));
 
-            db.Flush();
-            Assert.That(db.experiments.Count(), Is.EqualTo(ExperimentCount));
-        }
-        /*
-        }
-    
-        [Test, Order(2)]
-        public void TestRead()
-        {
-        */
-        {
-            IPlayer p1 = new Zucc(), p2 = new Elon(); // TODO: Should player names/order be stored?
+				ExperimentEntry res = new ExperimentEntry
+				{
+					Deck = deck,
+					Pick1 = expOut.Pick1,
+					Pick2 = expOut.Pick2,
+					AllowFight = expOut.AllowFight
+				};
 
-            int loops = 0;
-            Assert.That(db.experiments.Count(), Is.EqualTo(ExperimentCount));
+				db.StoreExperiment(res);
+			}
 
-            foreach (var exp in db.experiments.AsNoTracking())
-            {
-                loops++;
-                Assert.That(exp.Deck.Length, Is.EqualTo(IDeckShuffler.DeckLength));
+			db.Flush();
+			Assert.That(db.experiments.Count(), Is.EqualTo(ExperimentCount));
+		}
+		/*
+		}
+	
+		[Test, Order(2)]
+		public void TestRead()
+		{
+		*/
+		{
+			IPlayer p1 = new Zucc(), p2 = new Elon(); // TODO: Should player names/order be stored?
 
-                var (half1, half2) = DeckShuffler.SplitDeckInHalves(exp.Deck);
-                var expOut = ExperimentRunner.UseStrategies(
-                    (p1.GetStrategy(half1), half1),
-                    (p2.GetStrategy(half2), half2));
+			int loops = 0;
+			Assert.That(db.experiments.Count(), Is.EqualTo(ExperimentCount));
 
-                Assert.That(exp.Pick1, Is.EqualTo(expOut.Pick1));
-                Assert.That(exp.Pick2, Is.EqualTo(expOut.Pick2));
-                Assert.That(exp.AllowFight, Is.EqualTo(expOut.AllowFight));
-            }
+			foreach (ExperimentEntry exp in db.experiments.AsNoTracking())
+			{
+				loops++;
+				Assert.That(exp.Deck.Length, Is.EqualTo(IDeckShuffler.DeckLength));
 
-            Assert.That(loops, Is.EqualTo(ExperimentCount));
-        }
-    }
+				(Card[] half1, Card[] half2) = DeckShuffler.SplitDeckInHalves(exp.Deck);
+				ExperimentResult expOut = ExperimentRunner.UseStrategies(
+					(p1.GetStrategy(half1), half1),
+					(p2.GetStrategy(half2), half2));
+
+				Assert.That(exp.Pick1, Is.EqualTo(expOut.Pick1));
+				Assert.That(exp.Pick2, Is.EqualTo(expOut.Pick2));
+				Assert.That(exp.AllowFight, Is.EqualTo(expOut.AllowFight));
+			}
+
+			Assert.That(loops, Is.EqualTo(ExperimentCount));
+		}
+	}
 }

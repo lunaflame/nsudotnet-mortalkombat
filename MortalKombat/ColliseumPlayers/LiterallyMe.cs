@@ -2,14 +2,14 @@
 using Contracts.Interfaces;
 using Nsu.MortalKombat.Strategies;
 
-namespace Nsu.MortalKombat.Players
-{
-    public class LiterallyMe : IPlayer
-	{
-		RandomCard strategy = new RandomCard();
+namespace Nsu.MortalKombat.Players;
 
-		public ICardPickStrategy GetStrategy(Card[] ownCards) {
-			return strategy;
-		}
+public class LiterallyMe : IPlayer
+{
+	private readonly RandomCard strategy = new();
+
+	public ICardPickStrategy GetStrategy(Card[] ownCards)
+	{
+		return strategy;
 	}
 }
