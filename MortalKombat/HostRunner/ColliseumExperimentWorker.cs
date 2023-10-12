@@ -6,6 +6,7 @@ namespace HostRunner;
 public class ColliseumExperimentWorker : IHostedService
 {
     private ExperimentRunner runner;
+    private CancellationToken tok;
 
     private IPlayer player1;
     private IPlayer player2;
@@ -19,24 +20,65 @@ public class ColliseumExperimentWorker : IHostedService
     
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        Console.WriteLine($"pitting {this.player1} and {this.player2}...");
-
-        int counter = 0;
-        int tries = 1000000;
-
-        for (int i = 0; i < tries; i++)
-        {
-            ExperimentResult res = runner.RunSingle(this.player1, this.player2);
-            counter += res.AllowFight ? 1 : 0;
-        }
-
-        Console.WriteLine($"done, {counter}/{tries} fights.");
+        Console.WriteLine("start async...");
+        tok = cancellationToken;
         
-        return Task.CompletedTask;
+        var ret = new Task(() => DoExperiment(1000000));
+        ret.Start();
+
+        return Task.CompletedTask;  //ret.WaitAsync(cancellationToken);;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
+    }
+    
+    //public int DoExperiment(int times = 1, int cancelPollFreq = 5000)
+    
+    private int DoExperiment(int times = 1)
+    {
+        Console.WriteLine("doing experiment");
+        int wins = 0;
+        for (int n = 0; n < times; n++)
+        {
+            if (tok.IsCancellationRequested)
+            {
+                return -1;
+            }
+            
+            ExperimentResult res = runner.RunSingle(this.player1, this.player2);
+            wins += res.AllowFight ? 1 : 0;
+        }
+
+        Console.WriteLine($"Experiment finished: {wins}/{times} fights would occur.");
+        
+        return wins;
+        
+        /*
+        int checkCancelTimes = times / cancelPollFreq;
+        int runRemainder = times % cancelPollFreq;
+    
+        for (int i = 0; i < checkCancelTimes; i++)
+
+        {
+            if (!tok.IsCancellationRequested)
+            {
+                for (int n = 0; n < times; n++)
+                {
+                    ExperimentResult res = runner.RunSingle(this.player1, this.player2);
+                    wins += res.AllowFight ? 1 : 0;
+                }
+            }
+        }
+        
+        for (int n = 0; n < runRemainder; n++)
+        {
+            ExperimentResult res = runner.RunSingle(this.player1, this.player2);
+            wins += res.AllowFight ? 1 : 0;
+        }
+
+        return wins;
+        */
     }
 }

@@ -42,5 +42,18 @@ namespace Nsu.MortalKombat.DeckShufflers
 
             return ret;
         }
+        
+        public static (Card[], Card[]) SplitDeckInHalves(Card[] deck)
+        {
+            int halfSize = IDeckShuffler.DeckLength / 2;
+
+            Card[] deckHalf1 = new Card[halfSize];
+            Array.Copy(deck, 0, deckHalf1, 0, halfSize);
+
+            Card[] deckHalf2 = new Card[halfSize];
+            Array.Copy(deck, halfSize, deckHalf2, 0, halfSize);
+
+            return (deckHalf1, deckHalf2);
+        }
     }
 }

@@ -21,6 +21,26 @@ namespace Nsu.MortalKombat.Gods
 			this.deckShuffler = shuffler;
 		}
 
+		public static ExperimentResult UseStrategies((ICardPickStrategy, Card[]) p1, (ICardPickStrategy, Card[]) p2)
+		{
+            ICardPickStrategy strat1 = p1.Item1, strat2 = p2.Item1; 
+			Card[] deck1 = p1.Item2, deck2 = p2.Item2;
+
+            int pick1 = strat1.Pick(deck1);
+            int pick2 = strat2.Pick(deck2);
+
+            bool allow = deck1[pick2].Color == deck2[pick1].Color;
+
+            ExperimentResult res = new ExperimentResult
+            {
+                AllowFight = allow,
+                Pick1 = pick1,
+                Pick2 = pick2
+            };
+
+			return res;
+        }
+
 		public ExperimentResult RunSingle(IPlayer p1, IPlayer p2)
 		{
 			Card[] deck = deckShuffler.GetShuffledDeck();
@@ -35,19 +55,9 @@ namespace Nsu.MortalKombat.Gods
             ICardPickStrategy strat1 = p1.GetStrategy(deckHalf1);
 			ICardPickStrategy strat2 = p2.GetStrategy(deckHalf2);
 
-			int pick1 = strat1.Pick(deckHalf1);
-			int pick2 = strat2.Pick(deckHalf2);
+			ExperimentResult res = UseStrategies((strat1, deckHalf1), (strat2, deckHalf2));
 
-			bool allow = deckHalf1[pick2].Color == deckHalf2[pick1].Color;
-
-			ExperimentResult res = new ExperimentResult
-			{
-				AllowFight = allow, // TODO: Actually check colors
-				Pick1 = pick1,
-				Pick2 = pick2
-			};
-
-			return res;
+            return res;
 		}
 	}
 }
