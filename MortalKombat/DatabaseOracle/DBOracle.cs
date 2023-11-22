@@ -1,10 +1,11 @@
 ﻿using Contracts.Cards;
-using Contracts.Interfaces;
+using DatabaseOracle.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Nsu.MortalKombat.DatabaseOracle.Models;
+using Nsu.MortalKombat;
+using Util;
 
-namespace Nsu.MortalKombat.DatabaseOracle;
+namespace DatabaseOracle;
 
 public class DBOracle : DbContext
 {
@@ -19,8 +20,8 @@ public class DBOracle : DbContext
 		using MemoryStream s = new MemoryStream();
 		using BinaryReader r = new BinaryReader(s);
 		deckConverter = new ValueConverter<Card[], byte[]>(
-			deck => SerializeDeck(deck),
-			deckBin => DeserializeDeck(deckBin)
+			deck => DeckSerializer.SerializeDeck(deck),
+			deckBin => DeckSerializer.DeserializeDeck(deckBin)
 		);
 	}
 
@@ -47,31 +48,6 @@ public class DBOracle : DbContext
 	public ExperimentEntry GetExperiment(int id)
 	{
 		return experiments.Find(id);
-	}
-
-	private byte[] SerializeDeck(Card[] deck)
-	{
-		using (MemoryStream s = new MemoryStream())
-		using (BinaryWriter w = new BinaryWriter(s))
-		{
-			for (int i = 0; i < IDeckShuffler.DeckLength; i++) w.Write(deck[i].Color == CardColor.Red);
-
-			return s.ToArray();
-		}
-	}
-
-	private Card[] DeserializeDeck(byte[] deckBin)
-	{
-		Card[] ret = new Card[IDeckShuffler.DeckLength];
-
-		using BinaryReader r = new BinaryReader(new MemoryStream(deckBin));
-		for (int i = 0; i < IDeckShuffler.DeckLength; i++)
-		{
-			bool colIsRed = r.ReadBoolean();
-			ret[i] = new Card(colIsRed ? CardColor.Red : CardColor.Black);
-		}
-
-		return ret;
 	}
 	/*
 	 protected override void OnConfiguring(DbContextOptionsBuilder options)

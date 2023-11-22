@@ -36,12 +36,12 @@ public class DeckShuffler : IDeckShuffler
 	// I really expected this to be part of std, honestly
 	private void FisherYatesShuffle<T>(IList<T> arr)
 	{
-		int n = arr.Count - 1;
-
-		for (int i = 0; i < n; i++)
+		int n = arr.Count;
+		
+		while (n > 1)
 		{
-			int idx = rnd.Next(i, arr.Count);
-			(arr[i], arr[idx]) = (arr[idx], arr[i]);
+			int idx = rnd.Next(n--);
+			(arr[n], arr[idx]) = (arr[idx], arr[n]);
 		}
 	}
 

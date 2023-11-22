@@ -1,18 +1,19 @@
 ﻿using Contracts.Cards;
 using Contracts.Interfaces;
+using DatabaseOracle;
+using DatabaseOracle.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Nsu.MortalKombat.DatabaseOracle;
-using Nsu.MortalKombat.DatabaseOracle.Models;
+using Nsu.MortalKombat;
 using Nsu.MortalKombat.DeckShufflers;
 using Nsu.MortalKombat.Gods;
 using Nsu.MortalKombat.Players;
 
 namespace TestKombat;
 
-public class StoredExperimentTests
+public class Task4_StoredExperimentTests
 {
-	private const int ExperimentCount = 100;
+	private const int ExperimentCount = 1000;
 	private DBOracle db;
 	private readonly DeckShuffler shuffler = new();
 	private SqliteConnection sqlconn;
@@ -53,7 +54,7 @@ public class StoredExperimentTests
 					Pick2 = expOut.Pick2,
 					AllowFight = expOut.AllowFight
 				};
-
+				
 				db.StoreExperiment(res);
 			}
 

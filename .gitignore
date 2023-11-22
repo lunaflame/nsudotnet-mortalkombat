@@ -1,4 +1,5 @@
 ﻿**/obj
+**/packages
 **/bin
 .vs
 .idea

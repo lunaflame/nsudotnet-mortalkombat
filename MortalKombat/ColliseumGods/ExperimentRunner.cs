@@ -21,6 +21,36 @@ public class ExperimentRunner
 		deckShuffler = shuffler;
 	}
 
+	public static ExperimentResult GetResult((Card[], int) ch1, (Card[], int) ch2)
+	{
+		int pick1 = ch1.Item2,
+		    pick2 = ch2.Item2;
+		
+		Card[] deck1 = ch1.Item1,
+		       deck2 = ch2.Item1;
+
+		if (pick1 >= deck1.Length)
+		{
+			throw new IndexOutOfRangeException($"Pick #1 was out of range ({pick1} >= {deck1.Length})");
+		}
+		
+		if (pick2 >= deck2.Length)
+		{
+			throw new IndexOutOfRangeException($"Pick #2 was out of range ({pick2} >= {deck2.Length})");
+		}
+		
+		bool allow = ch1.Item1[ch2.Item2].Color == ch2.Item1[ch1.Item2].Color;
+
+		ExperimentResult res = new()
+		{
+			AllowFight = allow,
+			Pick1 = ch1.Item2,
+			Pick2 = ch2.Item2
+		};
+
+		return res;
+	}
+	
 	public static ExperimentResult UseStrategies((ICardPickStrategy, Card[]) p1, (ICardPickStrategy, Card[]) p2)
 	{
 		ICardPickStrategy strat1 = p1.Item1, strat2 = p2.Item1;
@@ -29,16 +59,7 @@ public class ExperimentRunner
 		int pick1 = strat1.Pick(deck1);
 		int pick2 = strat2.Pick(deck2);
 
-		bool allow = deck1[pick2].Color == deck2[pick1].Color;
-
-		ExperimentResult res = new()
-		{
-			AllowFight = allow,
-			Pick1 = pick1,
-			Pick2 = pick2
-		};
-
-		return res;
+		return GetResult((deck1, pick1), (deck2, pick2));
 	}
 
 	public ExperimentResult RunSingle(IPlayer p1, IPlayer p2)

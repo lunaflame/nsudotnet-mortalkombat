@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Contracts.Cards;
 
-namespace Nsu.MortalKombat.DatabaseOracle.Models;
+namespace DatabaseOracle.Models;
 
 public class ExperimentEntry
 {
