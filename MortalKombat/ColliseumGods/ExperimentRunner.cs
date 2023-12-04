@@ -72,7 +72,6 @@ public class ExperimentRunner
 		Card[] deckHalf2 = new Card[18];
 		Array.Copy(deck, 18, deckHalf2, 0, 18);
 
-		// TODO: Look into how NULLs work in C#; might be able to just chain calls together
 		ICardPickStrategy strat1 = p1.GetStrategy(deckHalf1);
 		ICardPickStrategy strat2 = p2.GetStrategy(deckHalf2);
 

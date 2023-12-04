@@ -22,7 +22,7 @@ public class PlayerController : ControllerBase
 	}
 
 	[HttpPost(Name = "GetOpponentDeckPick")]
-	public async Task<IActionResult> Get([FromBody] PickRequest req)
+	public IActionResult Get([FromBody] PickRequest req)
 	{
 		int halfDeckSize = IDeckShuffler.DeckLength / 2;
 		int halfDeckByteSize = (int)Math.Ceiling((double)halfDeckSize / 8);

@@ -11,6 +11,7 @@ public class DBOracle : DbContext
 {
 	public string DbPath { get; }
 	public DbSet<ExperimentEntry> experiments { get; set; }
+	public DbSet<DeckEntry> decks { get; set; }
 	private readonly ValueConverter<Card[], byte[]> deckConverter;
 
 
@@ -33,6 +34,11 @@ public class DBOracle : DbContext
 			.Entity<ExperimentEntry>()
 			.Property(e => e.Deck)
 			.HasConversion(deckConverter);
+
+		modelBuilder
+			.Entity<DeckEntry>()
+			.Property(e => e.Deck)
+			.HasConversion(deckConverter);
 	}
 
 	public void StoreExperiment(ExperimentEntry entry)
@@ -40,14 +46,30 @@ public class DBOracle : DbContext
 		Add(entry);
 	}
 
+	public void StoreDeck(Card[] deck)
+	{
+		Add(new DeckEntry()
+		{
+			Deck = deck
+		});
+	}
+	
 	public void Flush()
 	{
 		SaveChanges();
 	}
 
-	public ExperimentEntry GetExperiment(int id)
+	public ExperimentEntry? GetExperiment(int id)
 	{
 		return experiments.Find(id);
+	}
+	
+	public Card[]? GetDeck(int id)
+	{
+		var deck = decks.Find(id);
+		if (deck == null) return null;
+
+		return deck.Deck;
 	}
 	/*
 	 protected override void OnConfiguring(DbContextOptionsBuilder options)

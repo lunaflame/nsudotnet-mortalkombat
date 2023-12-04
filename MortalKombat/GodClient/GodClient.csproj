@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ColliseumGods\ExperimentRunners.csproj" />
+      <ProjectReference Include="..\DatabaseOracle\DatabaseOracle.csproj" />
       <ProjectReference Include="..\DeckShuffler\DeckShuffler.csproj" />
       <ProjectReference Include="..\MortalKombat\Contracts.csproj" />
       <ProjectReference Include="..\Task5_Web\Contracts\Contracts.csproj" />

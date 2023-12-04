@@ -2,6 +2,14 @@
 
 namespace GodClient;
 
+public static class Config
+{
+	public static string Player1Url = "http://localhost:5000";
+	public static string Player2Url = "http://localhost:5001";
+	public const int WaitTimeout = 2500;
+	public const string GodName = "Mars"; // Roman god of war, because funny
+}
+
 public class ExperimentDecks
 {
 	public List<Card[]> Decks1 { get; private set; } = new List<Card[]>();
