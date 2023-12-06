@@ -9,7 +9,6 @@ namespace DatabaseOracle;
 
 public class DBOracle : DbContext
 {
-	public string DbPath { get; }
 	public DbSet<ExperimentEntry> experiments { get; set; }
 	public DbSet<DeckEntry> decks { get; set; }
 	private readonly ValueConverter<Card[], byte[]> deckConverter;
@@ -71,8 +70,4 @@ public class DBOracle : DbContext
 
 		return deck.Deck;
 	}
-	/*
-	 protected override void OnConfiguring(DbContextOptionsBuilder options)
-	    => options.UseSqlite($"Data Source={DbPath}");
-	    */
 }

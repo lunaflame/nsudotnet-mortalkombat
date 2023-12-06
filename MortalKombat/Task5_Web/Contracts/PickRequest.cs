@@ -8,5 +8,5 @@ public class PickRequest
 	public int ExperimentAmount { get; set; }
 		
 	[JsonConverter(typeof(JsonByteArrayConverter))]
-	public byte[] DeckBinary { get; set; }
+	public byte[] DeckBinary { get; set; } = null!;
 }

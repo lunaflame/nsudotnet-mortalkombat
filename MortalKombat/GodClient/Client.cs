@@ -19,7 +19,7 @@ Dictionary<Action, string> choiceToName = new Dictionary<Action, string>
 
 string ConvertChoiceToText(Action choice)
 {
-	string ret;
+	string? ret;
 	if (!choiceToName.TryGetValue(choice, out ret))
 	{
 		ret = $"[unregistered choice: {choice.Method.Name}]".EscapeMarkup();
