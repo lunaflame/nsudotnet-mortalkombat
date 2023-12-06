@@ -37,8 +37,8 @@ public static partial class Options
 			return;
 		}
     	
-		if (!PlayerExperimentQuerier.ValidatePlayer(outs[0], decks.Decks1, 1)) return;
-		if (!PlayerExperimentQuerier.ValidatePlayer(outs[1], decks.Decks2, 2)) return;
+		if (!PlayerExperimentQuerier.ValidatePlayer(outs.ElementAtOrDefault(0), decks.Decks1, 1)) return;
+		if (!PlayerExperimentQuerier.ValidatePlayer(outs.ElementAtOrDefault(1), decks.Decks2, 2)) return;
 		// outs[n] checked to not be null ^
     	
 		ExperimentResult res = ExperimentRunner.GetResult(
