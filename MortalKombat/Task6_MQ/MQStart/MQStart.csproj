@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="MassTransit" Version="8.1.2" />
+    <PackageReference Include="Spectre.Console" Version="0.48.1-preview.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ColliseumGods\ExperimentRunners.csproj" />
+    <ProjectReference Include="..\..\DatabaseOracle\DatabaseOracle.csproj" />
+    <ProjectReference Include="..\..\DeckShuffler\DeckShuffler.csproj" />
+    <ProjectReference Include="..\..\MortalKombat\Contracts.csproj" />
+    <ProjectReference Include="..\..\Task5_Web\Contracts\Contracts.csproj" />
+  </ItemGroup>
+</Project>

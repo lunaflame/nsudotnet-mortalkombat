@@ -4,3 +4,8 @@ public class PlayerChoice
 {
 	public int[] CardPicks { get; set; } = null!;
 }
+
+public class MQReady
+{
+	
+}

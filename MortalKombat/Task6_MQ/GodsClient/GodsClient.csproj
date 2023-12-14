@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit" Version="8.1.3-develop.1631" />
+      <PackageReference Include="Spectre.Console" Version="0.48.1-preview.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\ColliseumGods\ExperimentRunners.csproj" />
+      <ProjectReference Include="..\..\DatabaseOracle\DatabaseOracle.csproj" />
+      <ProjectReference Include="..\..\MortalKombat\Contracts.csproj" />
+      <ProjectReference Include="..\..\Task5_Web\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\..\Util\Util.csproj" />
+    </ItemGroup>
+
+</Project>
