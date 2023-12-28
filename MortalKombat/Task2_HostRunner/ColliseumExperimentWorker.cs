@@ -19,7 +19,6 @@ public class ColliseumExperimentWorker : IHostedService
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		Console.WriteLine("start async...");
 		tok = cancellationToken;
 
 		Task ret = new Task(() => DoExperiment(1000000));
@@ -37,7 +36,6 @@ public class ColliseumExperimentWorker : IHostedService
 
 	private int DoExperiment(int times = 1)
 	{
-		Console.WriteLine("doing experiment");
 		int wins = 0;
 		for (int n = 0; n < times; n++)
 		{

@@ -13,7 +13,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\ColliseumPlayers\Players.csproj" />
       <ProjectReference Include="..\..\MortalKombat\Contracts.csproj" />
-      <ProjectReference Include="..\..\PlayerRoom\PlayerRoom.csproj" />
       <ProjectReference Include="..\..\Task5_Web\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\MQPlayerRoom\MQPlayerRoom.csproj" />
     </ItemGroup>

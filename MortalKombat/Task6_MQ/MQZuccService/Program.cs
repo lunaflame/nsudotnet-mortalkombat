@@ -1,9 +1,9 @@
 using System.Reflection;
 using Contracts.Interfaces;
 using MassTransit;
+using MQPlayerRoom;
 using MQZuccService;
 using Nsu.MortalKombat.Players;
-using PlayerRoom.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 
+
 Assembly[] externalControllers = {
-	typeof(PlayerController).Assembly,
+	typeof(MQPickCardController).Assembly,
 	/* more controllers... */
 };
 
 var mvc = builder.Services.AddMvc();
-builder.Services.AddScoped<IPlayer, Elon>();
+builder.Services.AddScoped<IPlayer, Zucc>();
+
+foreach (Assembly controller in externalControllers)
+{
+	mvc.AddApplicationPart(controller);
+}
+mvc.AddControllersAsServices();
+
+builder.Services.AddControllers();
 
 builder.Services.AddMassTransit(x =>
 {   

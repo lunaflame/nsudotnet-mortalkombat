@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using MQStart.Client;
 using Nsu.MortalKombat.DeckShufflers;
 
 namespace GodClient;

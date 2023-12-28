@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MQStart.Client;
 
 namespace MQStart
 {
@@ -25,7 +26,7 @@ namespace MQStart
             {
                 services.AddMassTransit(x =>
                 {
-                    x.AddConsumer<GodClient.PlayerExperimentQuerier.PlayerListener>();
+                    x.AddConsumer<PlayerExperimentQuerier>();
                     x.UsingRabbitMq((context, cfg) =>
                     {
                         var hostCfg = hostContext.Configuration;
@@ -40,7 +41,7 @@ namespace MQStart
                         cfg.ConfigureEndpoints(context);
                     });
                 });
-                services.AddHostedService<GodClient.Client>();
+                services.AddHostedService<Client.Client>();
             });
         }
     }

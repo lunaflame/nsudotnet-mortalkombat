@@ -2,26 +2,21 @@ using System.Reflection;
 using Contracts.Interfaces;
 using MassTransit;
 using MQElonService;
+using MQPlayerRoom;
 using Nsu.MortalKombat.Players;
-using PlayerRoom.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSwaggerGen();
 
-// Add services to the container.
-
-builder.Services.AddEndpointsApiExplorer();
-
-Assembly[] externalControllers = {
-	typeof(PlayerController).Assembly,
-	/* more controllers... */
-};
-
-var mvc = builder.Services.AddMvc();
 builder.Services.AddScoped<IPlayer, Elon>();
-
 builder.Services.AddMassTransit(x =>
 {   
     x.AddConsumer<ElonPlayer>();
+    
+    var mvc = x.AddControllers();
+    mvc.AddApplicationPart(typeof(MQPickCardController).Assembly);
+    mvc.AddControllersAsServices();
+    
     x.UsingRabbitMq((context, cfg) =>
     {
         var hostCfg = builder.Configuration;
@@ -38,21 +33,20 @@ builder.Services.AddMassTransit(x =>
         });
         
         cfg.ConfigureEndpoints(context);
-
-        /*var queueName = hostCfg.GetValue<string>("MQQueueName");
-        if (queueName == null)
-        {
-            throw new InvalidDataException("No \"MQQueueName\" set in appsettings.json!");
-        }*/
     });
 });
 
-// builder.Services.AddHostedService<GodClient.Client>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+	app.UseSwagger();
+	app.UseSwaggerUI();
+}
+
 app.UseAuthorization();
 app.MapControllers();
 

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <LangVersion>10</LangVersion>
+    <RootNamespace>MQStart</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +19,6 @@
     <ProjectReference Include="..\..\DeckShuffler\DeckShuffler.csproj" />
     <ProjectReference Include="..\..\MortalKombat\Contracts.csproj" />
     <ProjectReference Include="..\..\Task5_Web\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\MQPlayerRoom\MQPlayerRoom.csproj" />
   </ItemGroup>
 </Project>

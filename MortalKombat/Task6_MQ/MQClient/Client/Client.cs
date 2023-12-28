@@ -3,39 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GodClient;
 using MassTransit;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Spectre.Console;
 
-namespace GodClient;
+namespace MQStart.Client;
 
-public class Client : BackgroundService // is it really a *background* service, though
+public class Client : BackgroundService
 {
-	readonly IBus transitBus;
-	private PlayerExperimentQuerier querier;
-	private Options opts;
 	private Dictionary<Action, string> choiceToName;
 
     public Client(IBus bus)
     {
-        transitBus = bus;
-        querier = new PlayerExperimentQuerier(bus);
-        opts = new Options(querier);
+        Options opts = new Options(new PlayerExperimentQuerier(bus));
+        
         
         choiceToName = new Dictionary<Action, string>
         {
 	        [opts.RunRandomDeck] = "Run an experiment with a random deck",
-	        // [opts.PromptNRandomDecks] = "Run N experiments with random decks",
-	        // [opts.TryStoredExperiment] = "Run a random stored experiment",
         };
     }
     
 	private bool shouldExit = false;
-	private void Exit()
-	{
-		shouldExit = true;
-	}
 
 	string ConvertChoiceToText(Action choice)
 	{
